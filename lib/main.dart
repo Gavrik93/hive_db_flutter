@@ -3,14 +3,13 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 import 'contact_page.dart';
-import 'contact_page.dart';
-import 'contact_page.dart';
 import 'models/contact.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final appDocumentDirectory =
       await path_provider.getApplicationDocumentsDirectory();
+  Hive.registerAdapter(ContactAdapter(), 0);
   Hive.init(appDocumentDirectory.path);
   runApp(MyApp());
   //open box for use every where
@@ -43,6 +42,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void dispose() {
+    Hive.box<dynamic>('contacts').compact();
     Hive.close();
     super.dispose();
   }

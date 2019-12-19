@@ -16,7 +16,8 @@ class _NewContactFormState extends State<NewContactForm> {
 
   void addContact(Contact contact) {
     //add data to our database, .add no need key, because it's autogenerate +1
-    Hive.box<dynamic>('contacts').add(contact);
+    final contactsBox = Hive.box<dynamic>('contacts');
+  contactsBox.add(contact);
   }
 
   @override
@@ -47,7 +48,7 @@ class _NewContactFormState extends State<NewContactForm> {
             child: Text('Add New Contact'),
             onPressed: () {
               _formKey.currentState.save();
-              final newContact = Contact(_name, int.parse(_age));
+              final Contact newContact = Contact(_name, int.parse(_age));
               addContact(newContact);
             },
           ),
